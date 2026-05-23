@@ -1,0 +1,271 @@
+{
+  "info": {
+    "_postman_id": "9295bae2-0249-4769-985d-45c8fb540982",
+    "name": "TOTVS_Desafio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12740573"
+  },
+  "item": [
+    {
+      "name": "GET listar contas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/contas?page=0&size=3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "3"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET filtro descrição",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/contas?descricao=telefone",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas"
+          ],
+          "query": [
+            {
+              "key": "descricao",
+              "value": "telefone"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET filtro data",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/contas?dataVencimento=2026-06-10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas"
+          ],
+          "query": [
+            {
+              "key": "dataVencimento",
+              "value": "2026-06-10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET buscar por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/contas/6bff6a3c-9181-46ac-9152-65b43ebb3a7b",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "6bff6a3c-9181-46ac-9152-65b43ebb3a7b"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH alterar situação",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/contas/622eede5-87fb-46fb-ae5a-33219a3e72f0/situacao?situacao=PAGO",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "622eede5-87fb-46fb-ae5a-33219a3e72f0",
+            "situacao"
+          ],
+          "query": [
+            {
+              "key": "situacao",
+              "value": "PAGO"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Relatório total pago",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/contas/relatorio/total-pago?dataInicio=2026-01-01&dataFim=2026-12-31",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "relatorio",
+            "total-pago"
+          ],
+          "query": [
+            {
+              "key": "dataInicio",
+              "value": "2026-01-01"
+            },
+            {
+              "key": "dataFim",
+              "value": "2026-12-31"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Teste de regra inválida",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/contas/622eede5-87fb-46fb-ae5a-33219a3e72f0/situacao?situacao=PENDENTE",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "622eede5-87fb-46fb-ae5a-33219a3e72f0",
+            "situacao"
+          ],
+          "query": [
+            {
+              "key": "situacao",
+              "value": "PENDENTE"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST manual de conta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"dataVencimento\": \"2026-07-01\",\r\n  \"valor\": 680.00,\r\n  \"descricao\": \"Conta criada manualmente\",\r\n  \"fornecedorId\": \"e35ac819-c666-452c-92da-4cde42697399\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/contas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Import CSV",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "uuid": "fb0b2940-bcbb-4fad-bae7-fa4469c41d54",
+              "src": "postman-cloud:///1f156f1b-a8a2-4a00-8d2a-f0f1488588fd"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/contas/import",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "import"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
