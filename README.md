@@ -4,6 +4,7 @@ API REST desenvolvida em Java com Spring Boot para gestão de contas a pagar.
 
 O projeto contempla:
 
+- autenticação JWT
 - CRUD completo de contas
 - relacionamento obrigatório com fornecedores
 - paginação e filtros
@@ -20,6 +21,8 @@ O projeto contempla:
 - Spring Boot 3
 - Spring Web
 - Spring Data JPA
+- Spring Security
+- JWT
 - PostgreSQL
 - Flyway
 - RabbitMQ
@@ -44,6 +47,24 @@ Containers utilizados:
 | postgres | Banco PostgreSQL | 5432 |
 | rabbitmq | Broker de mensageria | 5672 |
 | rabbitmq-management | Interface RabbitMQ | 15672 |
+
+---
+
+# Requisitos
+
+Para executar o projeto localmente é necessário apenas:
+
+- Docker
+- Docker Compose
+
+Não é necessário instalar manualmente:
+
+- Java
+- Maven
+- PostgreSQL
+- RabbitMQ
+
+Toda a infraestrutura é inicializada automaticamente via containers.
 
 ---
 
@@ -79,6 +100,12 @@ docker-compose down
 docker-compose down -v
 docker-compose up --build
 ```
+
+---
+
+# Exemplo docker após execução
+
+![img.png](img.png)
 
 ---
 
@@ -119,6 +146,7 @@ com.impieri.gestaocontaspagar
 ├── dto
 ├── messaging
 ├── repository
+├── security
 ├── service
 └── web
 ```
@@ -135,11 +163,14 @@ O projeto foi organizado buscando separação de responsabilidades:
 - `service`: regras de aplicação e transações
 - `repository`: persistência com Spring Data JPA
 - `messaging`: integração RabbitMQ
+- `security`: autenticação JWT
 - `web`: controllers REST
 
 A listagem de contas utiliza carregamento do fornecedor associado para evitar problema de N+1 queries.
 
 As regras intrínsecas de negócio ficam concentradas na entidade `Conta`, mantendo invariantes do domínio protegidas independentemente da camada de entrada.
+
+O processamento do CSV foi implementado de forma assíncrona utilizando RabbitMQ, permitindo desacoplamento entre recebimento do arquivo e persistência em banco.
 
 ---
 
@@ -209,7 +240,68 @@ Situações possíveis:
 
 ---
 
+# Autenticação JWT
+
+A API utiliza autenticação JWT para proteger os endpoints.
+
+Os endpoints públicos são:
+
+- `/api/auth/login`
+- Swagger/OpenAPI
+
+Todos os demais endpoints exigem autenticação via Bearer Token.
+
+---
+
+## Realizar login
+
+Endpoint:
+
+```http
+POST /api/auth/login
+```
+
+Exemplo de requisição:
+
+```json
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+Resposta esperada:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "type": "Bearer"
+}
+```
+
+---
+
+## Utilizando o token
+
+Após obter o token, enviar no header:
+
+```http
+Authorization: Bearer SEU_TOKEN
+```
+
+Exemplo:
+
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+```
+
+---
+
 # Endpoints principais
+
+Todos os endpoints abaixo exigem autenticação JWT via Bearer Token.
+
+---
 
 ## Criar conta
 
@@ -325,12 +417,51 @@ Dados são persistidos no banco
 
 ---
 
+# Tratamento de exceções
+
+A API possui tratamento global de exceções utilizando `@RestControllerAdvice`.
+
+Exemplos tratados:
+
+- entidade não encontrada
+- erros de validação
+- parâmetros obrigatórios ausentes
+- corpo inválido da requisição
+- regras de negócio inválidas
+
+Exemplo de resposta:
+
+```json
+{
+  "timestamp": "2026-05-23T22:10:00Z",
+  "status": 404,
+  "error": "Not Found",
+  "message": "Conta não encontrada",
+  "path": "/api/contas/uuid"
+}
+```
+
+---
+
 # Swagger/OpenAPI
 
 A documentação da API fica disponível em:
 
 ```text
 http://localhost:8080/swagger-ui/index.html
+```
+
+O Swagger possui suporte a autenticação JWT via botão `Authorize`.
+
+Fluxo:
+
+1. realizar login
+2. copiar token retornado
+3. clicar em `Authorize`
+4. informar:
+
+```text
+Bearer SEU_TOKEN
 ```
 
 ---
@@ -346,6 +477,8 @@ postman/TOTVS_Desafio.postman_collection.json
 ```
 
 A collection contém exemplos para todos os endpoints da API.
+
+---
 
 ## Como importar
 
@@ -363,7 +496,37 @@ TOTVS_Desafio.postman_collection.json
 
 # Fluxo sugerido para testar a aplicação
 
-## 1. Importar contas via CSV
+## 1. Realizar login JWT
+
+Objetivos validados:
+
+- autenticação
+- geração de token JWT
+
+Endpoint:
+
+```http
+POST /api/auth/login
+```
+
+---
+
+## 2. Configurar Bearer Token
+
+Após realizar login:
+
+- copiar token retornado
+- configurar Bearer Token no Postman ou Swagger
+
+Header utilizado:
+
+```http
+Authorization: Bearer TOKEN
+```
+
+---
+
+## 3. Importar contas via CSV
 
 Objetivos validados:
 
@@ -380,7 +543,7 @@ POST /api/contas/import
 
 ---
 
-## 2. Criar uma conta manualmente
+## 4. Criar uma conta manualmente
 
 Objetivos validados:
 
@@ -396,7 +559,7 @@ POST /api/contas
 
 ---
 
-## 3. Listar contas com paginação
+## 5. Listar contas com paginação
 
 Objetivos validados:
 
@@ -412,7 +575,7 @@ GET /api/contas?page=0&size=10
 
 ---
 
-## 4. Testar filtros
+## 6. Testar filtros
 
 ### Por descrição
 
@@ -434,7 +597,7 @@ GET /api/contas?page=0&size=5&descricao=internet
 
 ---
 
-## 5. Buscar conta por ID
+## 7. Buscar conta por ID
 
 Objetivo validado:
 
@@ -448,7 +611,7 @@ GET /api/contas/{id}
 
 ---
 
-## 6. Atualizar uma conta
+## 8. Atualizar uma conta
 
 Objetivos validados:
 
@@ -464,7 +627,7 @@ PUT /api/contas/{id}
 
 ---
 
-## 7. Alterar situação da conta
+## 9. Alterar situação da conta
 
 Objetivos validados:
 
@@ -480,7 +643,7 @@ PATCH /api/contas/{id}/situacao?situacao=CANCELADO
 
 ---
 
-## 8. Validar regra de negócio inválida
+## 10. Validar regra de negócio inválida
 
 Exemplo:
 
@@ -500,7 +663,7 @@ PATCH /api/contas/{id}/situacao?situacao=PENDENTE
 
 ---
 
-## 9. Consultar relatório de total pago
+## 11. Consultar relatório de total pago
 
 Objetivos validados:
 
@@ -515,7 +678,7 @@ GET /api/contas/relatorio/total-pago
 
 ---
 
-## 10. Excluir conta
+## 12. Excluir conta
 
 Objetivos validados:
 
@@ -539,6 +702,7 @@ O projeto possui testes unitários cobrindo:
 - controllers
 - mensageria
 - factories
+- autenticação JWT
 
 Execução:
 

@@ -8,6 +8,7 @@ import com.impieri.gestaocontaspagar.dto.ContaRequest;
 import com.impieri.gestaocontaspagar.dto.ContaResponse;
 import com.impieri.gestaocontaspagar.repository.ContaRepository;
 import com.impieri.gestaocontaspagar.repository.FornecedorRepository;
+import com.impieri.gestaocontaspagar.web.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -38,7 +39,7 @@ public class ContaService {
     @Transactional
     public ContaResponse criar(ContaRequest request) {
         Fornecedor fornecedor = fornecedorRepository.findById(request.fornecedorId())
-                .orElseThrow(() -> new IllegalArgumentException(
+                .orElseThrow(() -> new ResourceNotFoundException(
                         "Fornecedor não encontrado: " + request.fornecedorId()
                 ));
 
@@ -81,7 +82,7 @@ public class ContaService {
     @Transactional(readOnly = true)
     public ContaResponse buscarPorId(UUID id) {
         Conta conta = contaRepository.findByIdWithFornecedor(id)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada: " + id));
 
         return toResponse(conta);
     }
@@ -89,7 +90,7 @@ public class ContaService {
     @Transactional
     public ContaResponse alterarSituacao(UUID id, Situacao novaSituacao) {
         Conta conta = contaRepository.findByIdWithFornecedor(id)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada: " + id));
 
         if (novaSituacao == null) {
             throw new IllegalArgumentException("Nova situação é obrigatória");
@@ -115,7 +116,7 @@ public class ContaService {
     @Transactional
     public ContaResponse atualizar(UUID id, ContaRequest request) {
         Conta conta = contaRepository.findByIdWithFornecedor(id)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada: " + id));
 
         Fornecedor fornecedor = fornecedorRepository.findById(request.fornecedorId())
                 .orElseThrow(() -> new IllegalArgumentException(
@@ -135,7 +136,7 @@ public class ContaService {
     @Transactional
     public void deletar(UUID id) {
         Conta conta = contaRepository.findByIdWithFornecedor(id)
-                .orElseThrow(() -> new IllegalArgumentException("Conta não encontrada: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada: " + id));
 
         if (conta.estaPaga()) {
             throw new IllegalStateException("Conta paga não pode ser excluída");

@@ -8,6 +8,7 @@ import com.impieri.gestaocontaspagar.dto.ContaRequest;
 import com.impieri.gestaocontaspagar.dto.ContaResponse;
 import com.impieri.gestaocontaspagar.repository.ContaRepository;
 import com.impieri.gestaocontaspagar.repository.FornecedorRepository;
+import com.impieri.gestaocontaspagar.web.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -107,8 +108,8 @@ class ContaServiceTest {
         when(fornecedorRepository.findById(fornecedorId))
                 .thenReturn(Optional.empty());
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
                 () -> contaService.criar(request)
         );
 
@@ -182,8 +183,8 @@ class ContaServiceTest {
         when(contaRepository.findByIdWithFornecedor(contaId))
                 .thenReturn(Optional.empty());
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
                 () -> contaService.buscarPorId(contaId)
         );
 

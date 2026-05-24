@@ -7,12 +7,86 @@
   },
   "item": [
     {
+      "name": "POST /api/auth/login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Import CSV",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "uuid": "fb0b2940-bcbb-4fad-bae7-fa4469c41d54",
+              "src": "postman-cloud:///1f156f1b-a8a2-4a00-8d2a-f0f1488588fd"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/contas/import",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "import"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "GET listar contas",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "url": {
-          "raw": "http://localhost:8080/api/contas?page=0&size=3",
+          "raw": "http://localhost:8080/api/contas?page=2&size=10",
           "protocol": "http",
           "host": [
             "localhost"
@@ -25,11 +99,11 @@
           "query": [
             {
               "key": "page",
-              "value": "0"
+              "value": "2"
             },
             {
               "key": "size",
-              "value": "3"
+              "value": "10"
             }
           ]
         }
@@ -40,9 +114,15 @@
       "name": "GET filtro descrição",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "url": {
-          "raw": "http://localhost:8080/api/contas?descricao=telefone",
+          "raw": "http://localhost:8080/api/contas?descricao=corporativa",
           "protocol": "http",
           "host": [
             "localhost"
@@ -55,7 +135,7 @@
           "query": [
             {
               "key": "descricao",
-              "value": "telefone"
+              "value": "corporativa"
             }
           ]
         }
@@ -66,7 +146,13 @@
       "name": "GET filtro data",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "http://localhost:8080/api/contas?dataVencimento=2026-06-10",
           "protocol": "http",
@@ -92,9 +178,15 @@
       "name": "GET buscar por ID",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "url": {
-          "raw": "http://localhost:8080/api/contas/6bff6a3c-9181-46ac-9152-65b43ebb3a7b",
+          "raw": "http://localhost:8080/api/contas/0f1996ec-950e-4b21-92e2-7076aed344c4",
           "protocol": "http",
           "host": [
             "localhost"
@@ -103,7 +195,7 @@
           "path": [
             "api",
             "contas",
-            "6bff6a3c-9181-46ac-9152-65b43ebb3a7b"
+            "0f1996ec-950e-4b21-92e2-7076aed344c4"
           ]
         }
       },
@@ -113,9 +205,15 @@
       "name": "PATCH alterar situação",
       "request": {
         "method": "PATCH",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "url": {
-          "raw": "http://localhost:8080/api/contas/622eede5-87fb-46fb-ae5a-33219a3e72f0/situacao?situacao=PAGO",
+          "raw": "http://localhost:8080/api/contas/0f1996ec-950e-4b21-92e2-7076aed344c4/situacao?situacao=PAGO",
           "protocol": "http",
           "host": [
             "localhost"
@@ -124,7 +222,7 @@
           "path": [
             "api",
             "contas",
-            "622eede5-87fb-46fb-ae5a-33219a3e72f0",
+            "0f1996ec-950e-4b21-92e2-7076aed344c4",
             "situacao"
           ],
           "query": [
@@ -141,7 +239,13 @@
       "name": "Relatório total pago",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "http://localhost:8080/api/contas/relatorio/total-pago?dataInicio=2026-01-01&dataFim=2026-12-31",
           "protocol": "http",
@@ -173,7 +277,13 @@
       "name": "Teste de regra inválida",
       "request": {
         "method": "PATCH",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
           "raw": "",
@@ -184,7 +294,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/api/contas/622eede5-87fb-46fb-ae5a-33219a3e72f0/situacao?situacao=PENDENTE",
+          "raw": "http://localhost:8080/api/contas/8028b06b-fea9-4a17-a42f-6487204a8e3b/situacao?situacao=PENDENTE",
           "protocol": "http",
           "host": [
             "localhost"
@@ -193,7 +303,7 @@
           "path": [
             "api",
             "contas",
-            "622eede5-87fb-46fb-ae5a-33219a3e72f0",
+            "8028b06b-fea9-4a17-a42f-6487204a8e3b",
             "situacao"
           ],
           "query": [
@@ -210,10 +320,16 @@
       "name": "POST manual de conta",
       "request": {
         "method": "POST",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"dataVencimento\": \"2026-07-01\",\r\n  \"valor\": 680.00,\r\n  \"descricao\": \"Conta criada manualmente\",\r\n  \"fornecedorId\": \"e35ac819-c666-452c-92da-4cde42697399\"\r\n}",
+          "raw": "{\r\n  \"dataVencimento\": \"2026-07-01\",\r\n  \"valor\": 680.00,\r\n  \"descricao\": \"Conta criada manualmente\",\r\n  \"fornecedorId\": \"0f8bc040-b176-490c-858d-ee3ff55ceb46\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -236,23 +352,31 @@
       "response": []
     },
     {
-      "name": "Import CSV",
+      "name": "PUT atualizar conta",
       "request": {
-        "method": "POST",
-        "header": [],
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
         "body": {
-          "mode": "formdata",
-          "formdata": [
-            {
-              "key": "file",
-              "type": "file",
-              "uuid": "fb0b2940-bcbb-4fad-bae7-fa4469c41d54",
-              "src": "postman-cloud:///1f156f1b-a8a2-4a00-8d2a-f0f1488588fd"
+          "mode": "raw",
+          "raw": "{\r\n  \"dataVencimento\": \"2026-07-01\",\r\n  \"valor\": 1.00,\r\n  \"descricao\": \"Conta criada manualmente\",\r\n  \"fornecedorId\": \"0f8bc040-b176-490c-858d-ee3ff55ceb46\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
             }
-          ]
+          }
         },
         "url": {
-          "raw": "http://localhost:8080/api/contas/import",
+          "raw": "http://localhost:8080/api/contas/9ca88bd9-23f4-454f-b42c-d8f03594d73f",
           "protocol": "http",
           "host": [
             "localhost"
@@ -261,9 +385,38 @@
           "path": [
             "api",
             "contas",
-            "import"
+            "9ca88bd9-23f4-454f-b42c-d8f03594d73f"
           ]
-        }
+        },
+        "description": "Generated from cURL: curl --location --request PUT 'http://localhost:8080/api/contas/00000000-0000-0000-0000-000000000000' \\\r\n--header 'Content-Type: application/json' \\\r\n--data '{\r\n  \"dataVencimento\": \"2026-08-10\",\r\n  \"valor\": 199.90,\r\n  \"descricao\": \"Conta atualizada via PUT\",\r\n  \"fornecedorId\": \"00000000-0000-0000-0000-000000000000\"\r\n}"
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE excluir conta",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3OTYzMDk4NiwiZXhwIjoxNzc5NjM0NTg2fQ.-HSf9HQUAmEc1jf3zUHfVnOV0bn10tnZta0XQ7Pi5U532bUnzd-qZFo21rWMftGicgSZq-Gx5RwcpNmqDRTNZA",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/contas/9ca88bd9-23f4-454f-b42c-d8f03594d73f",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "contas",
+            "9ca88bd9-23f4-454f-b42c-d8f03594d73f"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request DELETE 'http://localhost:8080/api/contas/00000000-0000-0000-0000-000000000000'"
       },
       "response": []
     }
